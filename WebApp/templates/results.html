@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/style2.css" />
+</head>
+<body>
+  <div class="container fac-container">
+    <img src="/static/logo.jpg" alt="" width="280" height="80" style="margin-bottom: 25px;" />
+    <h1>Attendance </h1> <!-- Added the title here -->
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Enrollment No</th>
+        <th>IP Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in students %}
+        <tr class="{{ i[0] }}">
+          <td>{{ i[1] }}</td>
+          <td>{{ i[2] }}</td>
+          <td>{{ i[3] }}</td>
+        </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+</body>
+</html>

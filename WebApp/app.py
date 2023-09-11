@@ -18,5 +18,15 @@ def get_results():
     print(name, enrollment_number, ip_addr)
     return redirect(url_for("index"))
 
+@app.route("/results", methods=["GET"])
+def results():
+    students = [
+        ("ok", "A", "B", "C"),
+        ("ok", "D", "E", "F"),
+        ("error", "G", "H", "I")
+    ]
+    return render_template("results.html", students=students)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
+
