@@ -29,3 +29,30 @@ th {
 .error {
     background-color: rgb(248, 196, 196);
 }
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.box-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.download-button {
+    background-color: #59a3f2;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;;
+    border-radius: 7px;
+    margin-right: 10px; /* Add margin to the right to separate it from the content */
+}
+
+.down-container {
+    display: flex;
+    align-items: center;
+}

@@ -54,6 +54,7 @@ async def get_results(request):
     enrollment_number = data["enrollment"]
     headers = request.headers
     ip_addr = headers.get('X-Forwarded-For')
+    print(ip_addr, name, enrollment_number)
     key = f"student:{enrollment_number}"
     redis_client.hset(key, "enrollment_number", enrollment_number)
     redis_client.hset(key, "name", name)
@@ -65,7 +66,7 @@ async def get_results(request):
 async def results(request):
     students = get_students()  
     sorted_list = sorted(students, key=lambda x: x['ip_address'])
-    return aiohttp_jinja2.render_template('results.html', request, {'students':sorted_list})
+    return aiohttp_jinja2.render_template('results.html', request, {'students':sorted_list, 'total':len(sorted_list)})
 
 
 @routes.get("/export")
@@ -95,7 +96,8 @@ app.router.add_routes(routes)
 
 
 if __name__ == "__main__":
-    os.system("rm *.xlsx")
+    try: os.system("rm *.xlsx")
+    except: pass
     redis_client = redis.Redis(host="localhost", port=6379, db=0)
     redis_client.flushdb()
     web.run_app(app, host='0.0.0.0', port=5000)
