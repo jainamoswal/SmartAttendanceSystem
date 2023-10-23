@@ -5,21 +5,63 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Attendance System</title>
-  <link rel="stylesheet" href="/static/style1.css" />
+  <link rel="stylesheet" href="/WebApp/static/style1.css" />
+  <style>
+    .container {
+      position: relative;
+    }
+
+    .confetti-container {
+      position: absolute;
+      top: -60%;
+      left: 0;
+      width: 100%;
+      height: 200%;
+      z-index: -1;
+    }
+  </style>
 </head>
 
 <body>
   <div class="container">
     <div class="center-content">
-      <img src="/static/logo.jpg" alt="" width="250" height="80" style="margin-bottom: 25px;" />
-      <h3>Attendance Form</h3> <!-- Added the title here -->
-      <form action="/" class="form-container" method="post">
+      <img src="/WebApp/static/logo.jpg" alt="" width="250" height="80" style="margin-bottom: 25px;" />
+      <h3>Attendance Form</h3>
+      <form action="/" class="form-container" method="post" onsubmit="return validateForm()">
         <input type="text" name="name" class="form-input" placeholder="Name" required />
         <input type="number" name="enrollment" class="form-input" placeholder="Enrollment Number" required />
-        <button type="submit" class="form-button">Submit</button>
+        <div class="button-wrapper">
+          <button type="submit" class="form-button confetti-button">Submit</button>
+        </div>
       </form>
+      <div class="confetti-container"></div>
     </div>
   </div>
+
+  <script>
+    function validateForm() {
+      const name = document.querySelector('input[name="name"]').value;
+      const enrollment = document.querySelector('input[name="enrollment"]').value;
+
+      if (name.trim() === "" || enrollment.trim() === "") {
+        alert("Please fill in all the details.");
+        return false;
+      }
+
+      let canvas = document.createElement("canvas");
+      let container = document.querySelector(".confetti-container");
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
+
+      container.appendChild(canvas);
+
+      let confetti_button = confetti.create(canvas);
+      confetti_button().then(() => container.removeChild(canvas));
+
+      return true;
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </body>
 
 </html>
