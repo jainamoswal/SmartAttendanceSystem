@@ -1,7 +1,35 @@
 # Configuration Files : 
 
-- /etc/hostapd/hostapd.conf
+- /etc/systemd/system/show_pass.service
+```
+[Unit]
+Description=Show WiFi Passphrase on LED Display
 
+[Service]
+User=root
+ExecStart=/usr/bin/python3 /root/display.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- /etc/systemd/system/web_service.service
+```
+[Unit]
+Description=Web Server
+After=network.target
+
+[Service]
+User=root
+ExecStart=/usr/bin/python3 /root/WebApp/app.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- /etc/hostapd/hostapd.conf
 ```
 country_code=IN
 interface=wlan0
@@ -45,7 +73,6 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    # Redirect www.example.com to example.com
     if ($host ~* ^www\.(.*)) {
         set $redirect_host $1;
         rewrite ^(.*)$ http://$redirect_host$1 permanent;
@@ -54,9 +81,8 @@ server {
 
 server {
     listen 80;
-    server_name 192.168.4.1;  # Replace with your domain or server IP address
+    server_name 192.168.4.1; 
 
-    # Redirect www.example.com to example.com
     if ($host ~* ^www\.(.*)) {
         set $redirect_host $1;
         rewrite ^(.*)$ http://$redirect_host$1 permanent;
