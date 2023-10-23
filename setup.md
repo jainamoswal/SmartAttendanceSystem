@@ -1,5 +1,23 @@
 # Configuration Files : 
 
+- /etc/hostapd/hostapd.conf
+
+```
+country_code=IN
+interface=wlan0
+ssid=Attendence System
+hw_mode=g
+channel=7
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_passphrase=12345678
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+```
+
 - /etc/dnsmasq.conf
 ```
 interface=wlan0 # Listening interface
@@ -33,8 +51,6 @@ server {
         rewrite ^(.*)$ http://$redirect_host$1 permanent;
     }
 }
-
-
 
 server {
     listen 80;
