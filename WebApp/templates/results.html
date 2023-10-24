@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/style2.css" />
+</head>
+<body>
+  <div class="container fac-container">
+    <img src="/static/logo.jpg" alt="" width="280" height="80" style="margin-bottom: 25px;" />
+    <h1>Attendance</h1>
+
+  </div>
+  <div class="container">
+    <div class="down-container">
+      <h>No of Students: {{ total }}</h>
+    </div>
+    <div class="box-container">
+      <a href="/export" class="download-button">Download</a>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Enrollment No</th>
+	<th>Student Name</th>
+        <th>IP Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in students %}
+        <tr class="{{ i['class'] }}">
+          <td>{{ i['enrollment_number'] }}</td>
+          <td>{{ i['name'] }}</td>
+          <td>{{ i['ip_address'] }}</td>
+        </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+</body>
+</html>
