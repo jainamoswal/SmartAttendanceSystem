@@ -64,6 +64,9 @@ async def get_results(request):
 
 @routes.get("/results")
 async def results(request):
+    auth_header = request.headers.get('auth')
+    if not auth_header:
+        return web.HTTPFound('/login')
     students = get_students()  
     sorted_list = sorted(students, key=lambda x: x['ip_address'])
     return aiohttp_jinja2.render_template('results.html', request, {'students':sorted_list, 'total':len(sorted_list)})
