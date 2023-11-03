@@ -61,6 +61,17 @@ async def get_results(request):
     redis_client.hset(key, "ip_address", ip_addr)
     return web.HTTPFound(location="/")
 
+@routes.post("/login")
+async def login(request):
+    data = await request.post()
+    username = data.get('username')
+    password = data.get('password')
+
+    if username == valid_credentials['username'] and password == valid_credentials['password']:
+        return web.HTTPFound('/results')
+    else:
+        return aiohttp_jinja2.render_template('login.html', request, {'error_message': 'Invalid credentials'})
+
 
 @routes.get("/results")
 async def results(request):
