@@ -1,5 +1,51 @@
 # Configuration Files : 
 
+- /etc/systemd/system/show_pass.service
+```
+[Unit]
+Description=Show WiFi Passphrase on LED Display
+
+[Service]
+User=root
+ExecStart=/usr/bin/python3 /root/display.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- /etc/systemd/system/web_service.service
+```
+[Unit]
+Description=Web Server
+After=network.target
+
+[Service]
+User=root
+ExecStart=/usr/bin/python3 /root/WebApp/app.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- /etc/hostapd/hostapd.conf
+```
+country_code=IN
+interface=wlan0
+ssid=Attendence System
+hw_mode=g
+channel=7
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_passphrase=12345678
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+```
+
 - /etc/dnsmasq.conf
 ```
 interface=wlan0 # Listening interface
@@ -27,20 +73,16 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    # Redirect www.example.com to example.com
     if ($host ~* ^www\.(.*)) {
         set $redirect_host $1;
         rewrite ^(.*)$ http://$redirect_host$1 permanent;
     }
 }
 
-
-
 server {
     listen 80;
-    server_name 192.168.4.1;  # Replace with your domain or server IP address
+    server_name 192.168.4.1; 
 
-    # Redirect www.example.com to example.com
     if ($host ~* ^www\.(.*)) {
         set $redirect_host $1;
         rewrite ^(.*)$ http://$redirect_host$1 permanent;
