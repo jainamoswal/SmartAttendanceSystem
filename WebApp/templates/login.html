@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 60vh;
+            width: auto;
+            font-size: 1rem;
+            font-family: sans-serif;
+        }
+
+        h1{
+            margin-bottom: 2rem;
+        }
+
+        form{
+            margin: 2rem;
+        }
+
+        #button{
+            margin-left: 2rem;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>Login</h1>
+    {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    <form method="post" action="/login">
+        <input type="text" id="username" name="username" required style="padding: 8px;" placeholder="Username"><br><br><br>
+        <input type="password" id="password" name="password" required style="padding:8px;" placeholder="Password"><br><br><br>
+        <input type="submit" value="Login" style="padding: 8px 15px; border: none; font-size: 0.8rem; background-color: green; color: white;" id="button">
+    </form>
+
+</div>
+</body>
+</html>

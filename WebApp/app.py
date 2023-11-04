@@ -40,6 +40,9 @@ def get_students():
 async def index(request):
     return aiohttp_jinja2.render_template('index.html', request, {})
 
+@routes.get("/login")
+async def login(request):
+    return aiohttp_jinja2.render_template('login.html', request, {})
 
 @routes.get("/static/{path}")
 async def static_dir(request):
@@ -61,9 +64,26 @@ async def get_results(request):
     redis_client.hset(key, "ip_address", ip_addr)
     return web.HTTPFound(location="/")
 
+@routes.post("/login")
+async def login(request):
+    data = await request.post()
+    username = data.get('username')
+    password = data.get('password')
+
+    if username == 'admin' and password == 'root':
+        response = web.HTTPFound('/results')
+        response.set_cookie('auth', 'ok')
+        print("returns")
+        return response
+    else:
+        return aiohttp_jinja2.render_template('login.html', request, {'error_message': 'Invalid credentials'})
+
 
 @routes.get("/results")
 async def results(request):
+    cookie = request.cookies.get('auth')
+    if not cookie:
+        return web.HTTPFound('/login')
     students = get_students()  
     sorted_list = sorted(students, key=lambda x: x['ip_address'])
     return aiohttp_jinja2.render_template('results.html', request, {'students':sorted_list, 'total':len(sorted_list)})
